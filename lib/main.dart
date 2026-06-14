@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:misemana_plus/presentation/screens/onboarding_screen.dart';
 
 import 'data/models/usuario_model.dart';
 import 'data/repositories/usuario_repository.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MiSemana+',
-      home: const HomePage(),
+      home: const OnboardingScreen(),
     );
   }
 }
