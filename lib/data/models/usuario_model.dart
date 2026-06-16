@@ -4,14 +4,16 @@ class UsuarioModel extends Usuario {
   UsuarioModel({
     super.id,
     required super.nombre,
-    required super.email,
+    required super.horaDormir,
+    required super.horaDespertar,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'nombre': nombre,
-      'email': email,
+      'horaDormir': horaDormir,
+      'horaDespertar': horaDespertar,
     };
   }
 
@@ -19,7 +21,8 @@ class UsuarioModel extends Usuario {
     return UsuarioModel(
       id: map['id'],
       nombre: map['nombre'],
-      email: map['email'],
+      horaDormir: map['horaDormir'],
+      horaDespertar: map['horaDespertar'],
     );
   }
 }

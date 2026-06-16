@@ -19,7 +19,7 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
     );
   }
@@ -32,8 +32,9 @@ class DatabaseHelper {
       CREATE TABLE usuarios(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nombre TEXT NOT NULL,
-        email TEXT NOT NULL UNIQUE
-      )
+        horaDormir TEXT NOT NULL,
+        horaDespertar TEXT NOT NULL
+)
     ''');
 
     await db.execute('''
