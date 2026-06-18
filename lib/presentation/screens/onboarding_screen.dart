@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/models/usuario_model.dart';
 import '../../data/repositories/usuario_repository.dart';
+import 'home_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -90,13 +91,16 @@ class _OnboardingScreenState
               );
               if (!mounted) return;
 
-              ScaffoldMessenger.of(context)
-                .showSnackBar(
-              const SnackBar(
-                content:
-                    Text("Perfil guardado"),
-      ),
-    );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => HomeScreen(
+                    nombre: usuario.nombre,
+                    horaDormir: usuario.horaDormir,
+                    horaDespertar: usuario.horaDespertar,
+                  ),
+                ),
+              );
   },
   child: const Text("Guardar"),
 ),

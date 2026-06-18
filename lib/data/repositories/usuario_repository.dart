@@ -32,4 +32,24 @@ class UsuarioRepository {
         )
         .toList();
   }
+
+  Future<UsuarioModel?> obtenerPrimerUsuario() async {
+
+    final Database db =
+        await DatabaseHelper.database;
+
+    final resultado =
+        await db.query(
+          'usuarios',
+          limit: 1,
+        );
+
+    if (resultado.isEmpty) {
+      return null;
+    }
+
+    return UsuarioModel.fromMap(
+      resultado.first,
+    );
+  }
 }
