@@ -18,10 +18,17 @@ class DatabaseHelper {
     );
 
     return await openDatabase(
-      path,
-      version: 2,
-      onCreate: _onCreate,
-    );
+  path,
+  version: 3,
+  onCreate: _onCreate,
+  onUpgrade: (db, oldVersion, newVersion) async {
+    await db.execute('DROP TABLE IF EXISTS usuarios');
+    await db.execute('DROP TABLE IF EXISTS actividades');
+    await db.execute('DROP TABLE IF EXISTS planificaciones');
+
+    await _onCreate(db, newVersion);
+  },
+);
   }
 
   static Future<void> _onCreate(

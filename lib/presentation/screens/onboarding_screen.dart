@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../data/models/usuario_model.dart';
+import '../../data/repositories/usuario_repository.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -19,6 +21,9 @@ class _OnboardingScreenState
 
   final despertarController =
       TextEditingController();
+
+  final UsuarioRepository repository =
+    UsuarioRepository();
 
   @override
   void dispose() {
@@ -68,9 +73,33 @@ class _OnboardingScreenState
             const SizedBox(height: 30),
 
             ElevatedButton(
-              onPressed: () {},
-              child: const Text("Guardar"),
-            ),
+              onPressed: () async {
+
+              if (nombreController.text.isEmpty ||
+                  dormirController.text.isEmpty ||
+                  despertarController.text.isEmpty) {
+                return;
+              }
+              final usuario = UsuarioModel(
+                  nombre: nombreController.text,
+                  horaDormir: dormirController.text,
+                  horaDespertar: despertarController.text,
+              );
+              await repository.insertarUsuario(
+                  usuario,
+              );
+              if (!mounted) return;
+
+              ScaffoldMessenger.of(context)
+                .showSnackBar(
+              const SnackBar(
+                content:
+                    Text("Perfil guardado"),
+      ),
+    );
+  },
+  child: const Text("Guardar"),
+),
           ],
         ),
       ),
