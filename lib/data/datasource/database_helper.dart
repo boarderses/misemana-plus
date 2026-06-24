@@ -19,12 +19,13 @@ class DatabaseHelper {
 
     return await openDatabase(
   path,
-  version: 3,
+  version: 4,
   onCreate: _onCreate,
   onUpgrade: (db, oldVersion, newVersion) async {
     await db.execute('DROP TABLE IF EXISTS usuarios');
     await db.execute('DROP TABLE IF EXISTS actividades');
     await db.execute('DROP TABLE IF EXISTS planificaciones');
+    await db.execute('DROP TABLE IF EXISTS objetivos');
 
     await _onCreate(db, newVersion);
   },
@@ -42,6 +43,15 @@ class DatabaseHelper {
         horaDormir TEXT NOT NULL,
         horaDespertar TEXT NOT NULL
 )
+    ''');
+    await db.execute('''
+      CREATE TABLE objetivos(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        usuarioId INTEGER NOT NULL,
+        tipo TEXT NOT NULL,
+        cantidad INTEGER NOT NULL,
+       FOREIGN KEY(usuarioId) REFERENCES usuarios(id)
+    )
     ''');
 
     await db.execute('''
