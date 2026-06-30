@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:misemana_plus/presentation/widgets/dashboard_card.dart';
+import 'objetivos_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final String nombre;
@@ -58,50 +60,36 @@ Widget build(BuildContext context) {
 
           const SizedBox(height: 20),
 
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.flag),
-              title: const Text("Objetivos"),
-              subtitle: const Text(
-                "Configura tus metas semanales",
-              ),
-              trailing: const Icon(
-                Icons.arrow_forward_ios,
-              ),
-              onTap: () {},
+          DashboardCard(
+              icon: Icons.flag,
+              titulo: "Objetivos",
+              subtitulo: "Configura tus metas semanales",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ObjetivosScreen(),
+                  ),
+                );
+              },
             ),
-          ),
 
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.event_note),
-              title: const Text("Actividades"),
-              subtitle: const Text(
-                "Gestiona tus actividades",
-              ),
-              trailing: const Icon(
-                Icons.arrow_forward_ios,
-              ),
+            DashboardCard(
+              icon: Icons.event_note,
+              titulo: "Actividades",
+              subtitulo: "Gestiona tus actividades",
               onTap: () {},
             ),
-          ),
 
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.calendar_month),
-              title: const Text("Planificación"),
-              subtitle: const Text(
-                "Generar planificación semanal",
-              ),
-              trailing: const Icon(
-                Icons.arrow_forward_ios,
-              ),
+            DashboardCard(
+              icon: Icons.calendar_month,
+              titulo: "Planificación",
+              subtitulo: "Generar planificación semanal",
               onTap: () {},
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 }
