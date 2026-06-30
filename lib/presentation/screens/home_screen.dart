@@ -13,62 +13,95 @@ class HomeScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("MiSemana+"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
-          children: [
-            Text(
-              "¡Hola, $nombre!",
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text("MiSemana+"),
+    ),
+    body: SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          Text(
+            "👋 Hola, $nombre",
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "😴 Sueño",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text("Dormir: $horaDormir"),
+                  Text("Despertar: $horaDespertar"),
+                ],
               ),
             ),
+          ),
 
-            const SizedBox(height: 30),
+          const SizedBox(height: 20),
 
-            const Text(
-              "Hora de dormir",
-            ),
-
-            Text(
-              horaDormir,
-              style: const TextStyle(
-                fontSize: 24,
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.flag),
+              title: const Text("Objetivos"),
+              subtitle: const Text(
+                "Configura tus metas semanales",
               ),
-            ),
-
-            const SizedBox(height: 20),
-
-            const Text(
-              "Hora de despertar",
-            ),
-
-            Text(
-              horaDespertar,
-              style: const TextStyle(
-                fontSize: 24,
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
               ),
+              onTap: () {},
             ),
+          ),
 
-            const SizedBox(height: 40),
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.event_note),
+              title: const Text("Actividades"),
+              subtitle: const Text(
+                "Gestiona tus actividades",
+              ),
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+              ),
+              onTap: () {},
+            ),
+          ),
 
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text(
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.calendar_month),
+              title: const Text("Planificación"),
+              subtitle: const Text(
                 "Generar planificación semanal",
               ),
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+              ),
+              onTap: () {},
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }
