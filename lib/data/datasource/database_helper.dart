@@ -19,16 +19,9 @@ class DatabaseHelper {
 
     return await openDatabase(
   path,
-  version: 4,
+  version: 5,
   onCreate: _onCreate,
-  onUpgrade: (db, oldVersion, newVersion) async {
-    await db.execute('DROP TABLE IF EXISTS usuarios');
-    await db.execute('DROP TABLE IF EXISTS actividades');
-    await db.execute('DROP TABLE IF EXISTS planificaciones');
-    await db.execute('DROP TABLE IF EXISTS objetivos');
-
-    await _onCreate(db, newVersion);
-  },
+  onUpgrade: _onUpgrade,
 );
   }
 
@@ -76,5 +69,24 @@ class DatabaseHelper {
         FOREIGN KEY(actividadId) REFERENCES actividades(id)
       )
     ''');
+  }
+  static Future<void> _onUpgrade(
+  Database db,
+  int oldVersion,
+  int newVersion,
+  ) async {
+
+  if (oldVersion < 5) {
+    await db.execute('''
+      CREATE TABLE semanas(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        usuarioId INTEGER NOT NULL,
+        numeroSemana INTEGER NOT NULL,
+        anio INTEGER NOT NULL,
+        estado TEXT NOT NULL,
+        FOREIGN KEY(usuarioId) REFERENCES usuarios(id)
+      )
+    ''');
+    }
   }
 }

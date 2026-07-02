@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:misemana_plus/presentation/widgets/dashboard_card.dart';
 import 'objetivos_screen.dart';
+import 'preparar_semana_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final String nombre;
@@ -59,6 +60,21 @@ Widget build(BuildContext context) {
           ),
 
           const SizedBox(height: 20),
+
+          DashboardCard(
+              icon: Icons.calendar_month,
+              titulo: "Preparar semana",
+              subtitulo: "Configura una nueva semana",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                    const PrepararSemanaScreen(),
+                 ),
+               );
+            },
+          ),
 
           DashboardCard(
               icon: Icons.flag,
