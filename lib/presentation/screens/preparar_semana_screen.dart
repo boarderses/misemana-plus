@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../data/models/semana_model.dart';
+import '../../data/repositories/semana_repository.dart';
+import 'work_schedule_screen.dart';
 
 class PrepararSemanaScreen extends StatefulWidget {
   const PrepararSemanaScreen({super.key});
@@ -16,6 +19,9 @@ class _PrepararSemanaScreenState
 
   final anioController =
       TextEditingController();
+  
+  final SemanaRepository repository =
+    SemanaRepository();
 
   bool copiarSemanaAnterior = false;
   bool vacaciones = false;
@@ -95,14 +101,34 @@ class _PrepararSemanaScreenState
             const SizedBox(height: 30),
 
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
 
+                final semana = SemanaModel(
+                  usuarioId: 1,
+                  numeroSemana:
+                      int.parse(numeroSemanaController.text),
+                  anio:
+                      int.parse(anioController.text),
+                  estado:
+                      vacaciones ? "Vacaciones" : "Normal",
+               );
+
+                final semanaId =
+                    await repository.insertarSemana(semana);
+
+                if (!mounted) return;
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => WorkScheduleScreen(
+                      semanaId: semanaId,
+                    ),
+                  ),
+                );
               },
-              child: const Text(
-                "Continuar",
-              ),
+              child: const Text("Continuar"),
             )
-
           ],
         ),
       ),

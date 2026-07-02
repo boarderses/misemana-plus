@@ -19,7 +19,7 @@ class DatabaseHelper {
 
     return await openDatabase(
   path,
-  version: 5,
+  version: 6,
   onCreate: _onCreate,
   onUpgrade: _onUpgrade,
 );
@@ -69,6 +69,28 @@ class DatabaseHelper {
         FOREIGN KEY(actividadId) REFERENCES actividades(id)
       )
     ''');
+
+    await db.execute('''
+      CREATE TABLE semanas(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        usuarioId INTEGER NOT NULL,
+        numeroSemana INTEGER NOT NULL,
+        anio INTEGER NOT NULL,
+        estado TEXT NOT NULL,
+        FOREIGN KEY(usuarioId) REFERENCES usuarios(id)
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE turnos(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        semanaId INTEGER NOT NULL,
+        dia INTEGER NOT NULL,
+        horaInicio TEXT NOT NULL,
+        horaFin TEXT NOT NULL,
+        FOREIGN KEY(semanaId) REFERENCES semanas(id)
+      )
+    ''');
   }
   static Future<void> _onUpgrade(
   Database db,
@@ -87,6 +109,18 @@ class DatabaseHelper {
         FOREIGN KEY(usuarioId) REFERENCES usuarios(id)
       )
     ''');
+    }
+  if (oldVersion < 6) {
+    await db.execute('''
+      CREATE TABLE turnos(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        semanaId INTEGER NOT NULL,
+        dia INTEGER NOT NULL,
+        horaInicio TEXT NOT NULL,
+        horaFin TEXT NOT NULL,
+        FOREIGN KEY(semanaId) REFERENCES semanas(id)
+      )
+    '''); 
     }
   }
 }
