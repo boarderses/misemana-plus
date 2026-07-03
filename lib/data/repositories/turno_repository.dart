@@ -56,4 +56,15 @@ class TurnoRepository {
         .map((e) => TurnoModel.fromMap(e))
         .toList();
   }
+  Future<void> eliminarTurno(int id) async {
+
+    final Database db =
+        await DatabaseHelper.database;
+
+        await db.delete(
+          'turnos',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }

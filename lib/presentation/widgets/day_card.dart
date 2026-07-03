@@ -21,7 +21,7 @@ class DayCard extends StatefulWidget {
 
   class _DayCardState extends State<DayCard> {
 
-    List<String> turnos = [];
+    List<TurnoModel> turnos = [];
     final TurnoRepository repository = TurnoRepository();
 
   Future<void> cargarTurnos() async {
@@ -34,13 +34,8 @@ class DayCard extends StatefulWidget {
 
     setState(() {
 
-     turnos = resultado
-         .map(
-           (e) =>
-               "${e.horaInicio} - ${e.horaFin}",
-          )
-          .toList();
-
+     turnos = resultado;
+     
     });
   } 
     @override
@@ -107,16 +102,58 @@ class DayCard extends StatefulWidget {
             turnos.isEmpty
               ? const Text("Día libre")
               : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,  
                   children: turnos
-                      .map(
-                        (turno) => Padding(
-                          padding:
-                              const EdgeInsets.only(bottom: 8),
-                          child: Text("🕗 $turno"),
-                        ),
-                     )
-                      .toList(),
+
+                   .map(   
+                    (turno) => ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.work),
+                    title: Text(
+                      "${turno.horaInicio} - ${turno.horaFin}",
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                    ),
+                    onPressed: () async {
+
+                    final confirmar = await showDialog<bool>(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                      title: const Text("Eliminar turno"),
+                      content: Text(
+                    "¿Quieres eliminar el turno de ${turno.horaInicio} a ${turno.horaFin}?",
+                    ),
+                    actions: [
+
+                     TextButton(
+                      onPressed: () {
+                        Navigator.pop(context, false);
+                      },
+                      child: const Text("Cancelar"),
+                    ),
+
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                    child: const Text("Eliminar"),
                 ),
+              ],
+            ),
+          );
+                if (confirmar != true) return;
+
+                    await repository.eliminarTurno(turno.id!);
+                    await cargarTurnos();
+                  },
+                 ),
+              ),
+            )
+                .toList(),
+              ),
             const SizedBox(height: 16),
 
             SizedBox(
