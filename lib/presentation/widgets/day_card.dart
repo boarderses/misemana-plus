@@ -107,8 +107,6 @@ class DayCard extends StatefulWidget {
             turnos.isEmpty
               ? const Text("Día libre")
               : Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
                   children: turnos
                       .map(
                         (turno) => Padding(
