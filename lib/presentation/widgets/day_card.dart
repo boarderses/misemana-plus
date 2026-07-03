@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:misemana_plus/data/repositories/turno_repository.dart';
+import 'package:misemana_plus/data/models/turno_model.dart';
 
 class DayCard extends StatefulWidget {
 
@@ -19,7 +21,33 @@ class DayCard extends StatefulWidget {
 
   class _DayCardState extends State<DayCard> {
 
-    List<String> turnos = []; 
+    List<String> turnos = [];
+    final TurnoRepository repository = TurnoRepository();
+
+  Future<void> cargarTurnos() async {
+
+    final resultado =
+        await repository.obtenerTurnosDia(
+         widget.semanaId,
+         widget.numeroDia,
+       ); 
+
+    setState(() {
+
+     turnos = resultado
+         .map(
+           (e) =>
+               "${e.horaInicio} - ${e.horaFin}",
+          )
+          .toList();
+
+    });
+  } 
+    @override
+    void initState() {
+    super.initState();
+    cargarTurnos();
+  }
 
   Future<void> _agregarTurno() async {
 
@@ -40,14 +68,16 @@ class DayCard extends StatefulWidget {
 
       if (horaFin == null) return;
 
-      setState(() {
+      final turno = TurnoModel(
+        semanaId: widget.semanaId,
+        dia: widget.numeroDia,
+        horaInicio: horaInicio.format(context),
+        horaFin: horaFin.format(context),
+      );
 
-        turnos.add(
-          "${horaInicio.format(context)} - ${horaFin.format(context)}",
-        );
-
-      });      
-   }
+        await repository.insertarTurno(turno);
+        await cargarTurnos();
+  }
       
   @override
   Widget build(BuildContext context) {

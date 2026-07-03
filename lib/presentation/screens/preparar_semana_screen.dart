@@ -113,8 +113,21 @@ class _PrepararSemanaScreenState
                       vacaciones ? "Vacaciones" : "Normal",
                );
 
-                final semanaId =
-                    await repository.insertarSemana(semana);
+                final semanaExistente =
+                  await repository.obtenerSemana(
+                  semana.usuarioId,
+                  semana.numeroSemana,
+                  semana.anio,
+                );
+
+                int semanaId;
+
+                if (semanaExistente != null) {
+                  semanaId = semanaExistente.id!;
+                } else {
+                  semanaId =
+                  await repository.insertarSemana(semana);
+                }
 
                 if (!mounted) return;
 
