@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:misemana_plus/presentation/widgets/dashboard_card.dart';
 import 'objetivos_screen.dart';
-import 'preparar_semana_screen.dart';
+import 'weekly_plan_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final String nombre;

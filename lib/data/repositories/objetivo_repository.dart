@@ -17,16 +17,16 @@ class ObjetivoRepository {
     );
   }
 
-  Future<List<ObjetivoModel>> obtenerObjetivos(
-      int usuarioId) async {
+  Future<List<ObjetivoModel>> obtenerObjetivosSemana(
+      int semanaId) async {
 
     final Database db =
         await DatabaseHelper.database;
 
     final resultado = await db.query(
       'objetivos',
-      where: 'usuarioId = ?',
-      whereArgs: [usuarioId],
+      where: 'semanaId = ?',
+      whereArgs: [semanaId],
     );
 
     return resultado

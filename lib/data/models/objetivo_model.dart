@@ -3,7 +3,7 @@ import '../../domain/entities/objetivo.dart';
 class ObjetivoModel extends Objetivo {
   ObjetivoModel({
     super.id,
-    required super.usuarioId,
+    required super.semanaId,
     required super.tipo,
     required super.cantidad,
   });
@@ -11,7 +11,7 @@ class ObjetivoModel extends Objetivo {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'usuarioId': usuarioId,
+      'semanaId': semanaId,
       'tipo': tipo,
       'cantidad': cantidad,
     };
@@ -22,7 +22,7 @@ class ObjetivoModel extends Objetivo {
   ) {
     return ObjetivoModel(
       id: map['id'],
-      usuarioId: map['usuarioId'],
+      semanaId: map['semanaId'],
       tipo: map['tipo'],
       cantidad: map['cantidad'],
     );

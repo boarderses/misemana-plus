@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/day_card.dart';
+import 'weekly_objetives_screen.dart';
 
 class WorkScheduleScreen extends StatelessWidget {
 
@@ -27,7 +28,10 @@ class WorkScheduleScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Horario laboral"),
       ),
-      body: ListView.builder(
+      body: Column(
+        children: [
+
+          Expanded(child: ListView.builder( 
         itemCount: dias.length,
         itemBuilder: (context, index) {
 
@@ -38,6 +42,32 @@ class WorkScheduleScreen extends StatelessWidget {
           );
         },
       ),
+    ),
+          Padding(
+      padding: const EdgeInsets.all(16),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () {
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => WeeklyObjectivesScreen(
+                  semanaId: semanaId,
+                ),
+              ),
+            );
+
+          },
+            child: const Text(
+            "Continuar",
+            ),
+          ),
+        ),
+      ),
+    ],
+  ),
     );
   }
 }

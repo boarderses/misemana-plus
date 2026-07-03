@@ -19,7 +19,7 @@ class DatabaseHelper {
 
     return await openDatabase(
   path,
-  version: 6,
+  version: 7,
   onCreate: _onCreate,
   onUpgrade: _onUpgrade,
 );
@@ -40,10 +40,10 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE objetivos(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        usuarioId INTEGER NOT NULL,
+        semanaId INTEGER NOT NULL,
         tipo TEXT NOT NULL,
         cantidad INTEGER NOT NULL,
-       FOREIGN KEY(usuarioId) REFERENCES usuarios(id)
+       FOREIGN KEY(semanaId) REFERENCES semanas(id)
     )
     ''');
 
@@ -121,6 +121,19 @@ class DatabaseHelper {
         FOREIGN KEY(semanaId) REFERENCES semanas(id)
       )
     '''); 
+    }
+  if (oldVersion < 7) {
+    await db.execute('DROP TABLE IF EXISTS objetivos');
+
+    await db.execute('''
+      CREATE TABLE objetivos(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        semanaId INTEGER NOT NULL,
+        tipo TEXT NOT NULL,
+        cantidad INTEGER NOT NULL,
+        FOREIGN KEY(semanaId) REFERENCES semanas(id)
+      )
+    ''');
     }
   }
 }
