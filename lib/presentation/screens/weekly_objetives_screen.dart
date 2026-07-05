@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/objective_counter_card.dart';
 import '../../data/models/objetivo_model.dart';
 import '../../data/repositories/objetivo_repository.dart';
+import '../../core/constants/objective_types.dart';
 
 class WeeklyObjectivesScreen extends StatefulWidget {
 
@@ -30,36 +31,39 @@ class _WeeklyObjectivesScreenState
     ObjetivoRepository();
   
   Future<void> guardarObjetivos() async {
-    print("Entrando en guardarObjetivos");
-  final objetivos = [
+    
+    await repository.eliminarObjetivosSemana(
+    widget.semanaId,
+    );
+    final objetivos = [
 
     ObjetivoModel(
       semanaId: widget.semanaId,
-      tipo: "Estudio",
+      tipo: ObjectiveTypes.estudio,
       cantidad: estudio,
     ),
 
     ObjetivoModel(
       semanaId: widget.semanaId,
-      tipo: "Deporte",
+      tipo: ObjectiveTypes.deporte,
       cantidad: deporte,
     ),
 
     ObjetivoModel(
       semanaId: widget.semanaId,
-      tipo: "Alimentacion",
+      tipo: ObjectiveTypes.alimentacion,
       cantidad: alimentacion,
     ),
 
     ObjetivoModel(
       semanaId: widget.semanaId,
-      tipo: "Ocio",
+      tipo: ObjectiveTypes.ocio,
       cantidad: ocio,
     ),
 
     ObjetivoModel(
       semanaId: widget.semanaId,
-      tipo: "TiempoPersonal",
+      tipo: ObjectiveTypes.tiempoPersonal,
       cantidad: tiempoPersonal,
     ),
 
@@ -88,23 +92,23 @@ class _WeeklyObjectivesScreenState
 
       switch (objetivo.tipo) {
 
-        case "Estudio":
+        case ObjectiveTypes.estudio:
           estudio = objetivo.cantidad;
           break;
 
-        case "Deporte":
+        case ObjectiveTypes.deporte:
           deporte = objetivo.cantidad;
           break;
 
-        case "Alimentacion":
+        case ObjectiveTypes.alimentacion:
           alimentacion = objetivo.cantidad;
           break;
 
-        case "Ocio":
+        case ObjectiveTypes.ocio:
           ocio = objetivo.cantidad;
           break;
 
-        case "TiempoPersonal":
+        case ObjectiveTypes.tiempoPersonal:
           tiempoPersonal = objetivo.cantidad;
           break;
 

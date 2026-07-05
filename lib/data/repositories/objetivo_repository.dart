@@ -33,4 +33,16 @@ class ObjetivoRepository {
         .map((e) => ObjetivoModel.fromMap(e))
         .toList();
   }
+  Future<void> eliminarObjetivosSemana(
+    int semanaId,) async {
+
+   final Database db =
+      await DatabaseHelper.database;
+
+      await db.delete(
+        'objetivos',
+        where: 'semanaId = ?',
+        whereArgs: [semanaId],
+       );
+    }
 }
