@@ -3,6 +3,7 @@ import '../widgets/objective_counter_card.dart';
 import '../../data/models/objetivo_model.dart';
 import '../../data/repositories/objetivo_repository.dart';
 import '../../core/constants/objective_types.dart';
+import 'planner_debug_screen.dart';
 
 class WeeklyObjectivesScreen extends StatefulWidget {
 
@@ -245,13 +246,15 @@ class _WeeklyObjectivesScreenState
 
                 if (!mounted) return;
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Objetivos guardados",
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PlannerDebugScreen(
+                    semanaId: widget.semanaId,
                     ),
-                  ),
+                 ),
                 );
-
+                
               },
               child: const Text(
                 "Guardar objetivos",
