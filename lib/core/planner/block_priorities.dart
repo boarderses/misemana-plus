@@ -7,5 +7,6 @@ class BlockPriorities {
   static const sport = 60;
   static const personal = 50;
   static const leisure = 40;
+  static const free = 0;
 
 }

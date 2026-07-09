@@ -7,4 +7,5 @@ class BlockTypes {
   static const food = "FOOD";
   static const leisure = "LEISURE";
   static const personal = "PERSONAL";
+  static const free = "FREE";
 }

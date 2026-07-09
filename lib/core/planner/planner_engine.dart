@@ -1,3 +1,4 @@
+import 'package:misemana_plus/core/planner/rules/free_time_rule.dart';
 import 'planner_rule.dart';
 import 'time_block.dart';
 import 'rules/sleep_rule.dart';
@@ -9,6 +10,7 @@ class PlannerEngine {
   final List<PlannerRule> rules = [
     SleepRule(),
     WorkRule(),
+    FreeTimeRule(),
   ];
 
   List<TimeBlock> generate( 
