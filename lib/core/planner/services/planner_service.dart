@@ -18,6 +18,7 @@ class PlannerService {
 
     final usuario =
         await usuarioRepository.obtenerPrimerUsuario();
+    print("Usuario: $usuario");
 
     if (usuario == null) {
       return [];
@@ -27,18 +28,21 @@ class PlannerService {
         await turnoRepository.obtenerTurnosSemana(
       semanaId,
     );
+    print("Turnos: ${turnos.length}");
 
     final objetivos =
         await objetivoRepository.obtenerObjetivosSemana(
       semanaId,
     );
+    print("Objetivos: ${objetivos.length}");
 
     final context = PlannerContext(
       usuario: usuario,
       turnos: turnos,
       objetivos: objetivos,
     );
-
+    final resultado = engine.generate(context);
+    print("Bloques generados: ${resultado.length}");
     return engine.generate(context);
 
   }

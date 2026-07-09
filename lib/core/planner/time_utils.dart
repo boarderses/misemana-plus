@@ -27,5 +27,21 @@ class TimeUtils {
     return "$hour:$minute";
 
   }
+  static bool crossesMidnight(
+  int start,
+  int end,
+) {
+  return start > end;
+}
+
+static bool overlaps(
+  int start1,
+  int end1,
+  int start2,
+  int end2,
+) {
+  return start1 < end2 &&
+         end1 > start2;
+}
 
 }

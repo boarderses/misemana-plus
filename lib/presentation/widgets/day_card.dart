@@ -66,8 +66,8 @@ class DayCard extends StatefulWidget {
       final turno = TurnoModel(
         semanaId: widget.semanaId,
         dia: widget.numeroDia,
-        horaInicio: horaInicio.format(context),
-        horaFin: horaFin.format(context),
+        horaInicio: "${horaInicio.hour.toString().padLeft(2, '0')}:${horaInicio.minute.toString().padLeft(2, '0')}",
+        horaFin: "${horaFin.hour.toString().padLeft(2, '0')}:${horaFin.minute.toString().padLeft(2, '0')}",
       );
 
         await repository.insertarTurno(turno);
