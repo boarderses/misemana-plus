@@ -29,6 +29,26 @@ class WorkRule implements PlannerRule {
     );
 
       }
+      else { 
+        blocks.add(
+          TimeBlock(
+            day: turno.dia,
+            start: inicio,
+            end: 1440,
+            type: BlockTypes.work,
+            priority: BlockPriorities.work,
+          ),
+        );
+        blocks.add(
+          TimeBlock(
+            day: turno.dia == 7 ? 1 : turno.dia +1,
+            start: 0,
+            end: fin,
+            type: BlockTypes.work,
+            priority: BlockPriorities.work,
+          ),
+        );
+      }
     }
     return blocks;
     }
