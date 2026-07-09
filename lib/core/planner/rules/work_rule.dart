@@ -2,8 +2,8 @@ import 'package:misemana_plus/core/planner/time_utils.dart';
 import '../planner_rule.dart';
 import '../time_block.dart';
 import '../planner_context.dart';
-import 'package:misemana_plus/core/planner/block_priorities.dart';
-import 'package:misemana_plus/core/planner/block_types.dart';
+import 'package:misemana_plus/core/planner/constants/block_priorities.dart';
+import 'package:misemana_plus/core/planner/constants/block_types.dart';
 
 class WorkRule implements PlannerRule {
 

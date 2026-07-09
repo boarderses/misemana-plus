@@ -1,5 +1,5 @@
-import '../block_priorities.dart';
-import '../block_types.dart';
+import '../constants/block_priorities.dart';
+import '../constants/block_types.dart';
 import '../planner_context.dart';
 import '../planner_rule.dart';
 import '../time_block.dart';

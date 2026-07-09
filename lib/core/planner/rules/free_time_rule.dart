@@ -1,8 +1,8 @@
 import '../planner_context.dart';
 import '../planner_rule.dart';
 import '../time_block.dart';
-import 'package:misemana_plus/core/planner/block_priorities.dart';
-import 'package:misemana_plus/core/planner/block_types.dart';
+import 'package:misemana_plus/core/planner/constants/block_priorities.dart';
+import 'package:misemana_plus/core/planner/constants/block_types.dart';
 
 class FreeTimeRule implements PlannerRule {
 

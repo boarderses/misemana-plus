@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/objective_counter_card.dart';
 import '../../data/models/objetivo_model.dart';
 import '../../data/repositories/objetivo_repository.dart';
-import '../../core/constants/objective_types.dart';
+import '../../core/planner/constants/objective_types.dart';
 import 'planner_debug_screen.dart';
 
 class WeeklyObjectivesScreen extends StatefulWidget {
