@@ -1,28 +1,42 @@
+import 'package:misemana_plus/core/planner/free_time_analyzer.dart';
+
 import 'time_block.dart';
 import 'constants/block_types.dart';
 import 'constants/block_priorities.dart';
 
 class BlockAllocator {
+    final FreeTimeAnalyzer analyzer = FreeTimeAnalyzer();
 
-    TimeBlock? findFreeBlock(
+    TimeBlock? _findBestBlockInDay(
       List<TimeBlock> blocks,
+      int day,
       int minutes,
     ) {
 
+      TimeBlock? bestBlock;
+      int bestDuration = 0;
+
       for (final block in blocks) {
+        if (block.day != day){
+          continue;
+        }
 
         if (block.type != BlockTypes.free) {
-          continue;
+        continue;
       }
 
-      final duration =
-        block.end - block.start;
+      final duration = block.end - block.start;
 
-        if (duration >= minutes) {
-        return block;
+      if (duration < minutes) {
+        continue;
+      }
+
+      if (duration > bestDuration) {
+        bestDuration = duration;
+        bestBlock = block;
       }
     }
-  return null;
+    return bestBlock;
   }
     bool allocate(
       List<TimeBlock> blocks,
@@ -31,12 +45,14 @@ class BlockAllocator {
       int priority,
     ) {
 
-      final freeBlock = findFreeBlock(blocks,minutes,);
+      final days = analyzer.analyze(blocks);
+      for (final day in days){
+        final freeBlock = _findBestBlockInDay(blocks, day.day, minutes);
 
-   if (freeBlock == null) {
-    return false;
+      if (freeBlock == null) {
+      continue;
     }
-
+  
     final end = freeBlock.start + minutes;
 
     final activity = TimeBlock(
@@ -75,5 +91,7 @@ class BlockAllocator {
     });
 
     return true;
+    }
+    return false;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../core/planner/free_time_analyzer.dart';
 import '../../core/planner/services/planner_service.dart';
 import '../../core/planner/time_block.dart';
 import '../../core/planner/time_utils.dart';
@@ -38,7 +38,14 @@ class _PlannerDebugScreenState
         await plannerService.generate(
       widget.semanaId,
     );
+    final analyzer = FreeTimeAnalyzer();
 
+    final days = analyzer.analyze(resultado);
+
+    for (final day in days) {
+      print("Día ${day.day}: ${day.minutes} minutos libres",
+    );
+  }
     setState(() {
       blocks = resultado;
     });
