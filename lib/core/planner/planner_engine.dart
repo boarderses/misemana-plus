@@ -1,3 +1,4 @@
+import 'package:misemana_plus/core/planner/rules/food_rule.dart';
 import 'package:misemana_plus/core/planner/rules/free_time_rule.dart';
 import 'package:misemana_plus/core/planner/rules/leisure_rule.dart';
 import 'package:misemana_plus/core/planner/rules/personal_time_rule.dart';
@@ -15,6 +16,7 @@ class PlannerEngine {
     SleepRule(),
     WorkRule(),
     FreeTimeRule(),
+    FoodRule(),
     StudyRule(),
     SportRule(),
     LeisureRule(),
