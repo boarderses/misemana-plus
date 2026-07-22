@@ -1,17 +1,79 @@
-# misemana_plus
+# MiSemana+
 
-A new Flutter project.
+**MiSemana+** es una aplicación móvil desarrollada como Proyecto Final del Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM).
 
-## Getting Started
+Su objetivo es ayudar al usuario a organizar automáticamente su semana mediante un motor inteligente de planificación que distribuye actividades teniendo en cuenta horarios de trabajo, descanso, alimentación, estudio, deporte, ocio y tiempo personal.
 
-This project is a starting point for a Flutter application.
+## Características principales
 
-A few resources to get you started if this is your first Flutter project:
+* Planificación semanal automática.
+* Gestión de horarios de trabajo variables.
+* Compatibilidad con turnos partidos y turnos nocturnos.
+* Configuración de objetivos semanales.
+* Organización automática del tiempo libre.
+* Planificación inteligente de estudio, deporte, ocio y tiempo personal.
+* Distribución automática de desayuno, almuerzo y cena.
+* Base de datos local SQLite.
+* Arquitectura MVVM.
+* Motor de planificación basado en reglas (Rule Engine).
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Tecnologías utilizadas
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Lenguaje
+
+* Dart
+
+### Framework
+
+* Flutter
+
+### Base de datos
+
+* SQLite (sqflite)
+
+### Arquitectura
+
+* MVVM
+* Repository Pattern
+* Rule Engine
+
+### Herramientas
+
+* Android Studio
+* Visual Studio Code
+* Git
+* GitHub
+
+## Arquitectura del proyecto
+
+Presentation
+│
+├── Screens
+├── Widgets
+│
+Data
+│
+├── Models
+├── Repositories
+├── Datasource
+│
+Core
+│
+└── Planner Engine
+    ├── PlannerEngine
+    ├── PlannerService
+    ├── Rules
+    ├── BlockAllocator
+    ├── TimeWindowAllocator
+    └── Utilities
+
+## Estado del proyecto
+
+Actualmente el proyecto dispone de un motor de planificación completamente funcional capaz de generar automáticamente una planificación semanal personalizada.
+
+Las siguientes fases estarán centradas en mejorar la experiencia de usuario, la representación visual del planificador y nuevas funcionalidades inteligentes.
+
+## Autor
+
+Alejandro
+Proyecto Final CFGS Desarrollo de Aplicaciones Multiplataforma.
