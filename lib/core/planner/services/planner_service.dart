@@ -1,8 +1,10 @@
 import '../../../data/repositories/objetivo_repository.dart';
 import '../../../data/repositories/turno_repository.dart';
 import '../../../data/repositories/usuario_repository.dart';
+
 import '../planner_context.dart';
 import '../planner_engine.dart';
+import '../planner_week.dart';
 import '../time_block.dart';
 
 class PlannerService {
@@ -12,7 +14,7 @@ class PlannerService {
   final TurnoRepository turnoRepository = TurnoRepository();
   final ObjetivoRepository objetivoRepository = ObjetivoRepository();
 
-  Future<List<TimeBlock>> generate(
+  Future<PlannerWeek> generate(
     int semanaId,
   ) async {
 
@@ -21,7 +23,7 @@ class PlannerService {
     print("Usuario: $usuario");
 
     if (usuario == null) {
-      return [];
+      return const PlannerWeek(days: {},);
     }
 
     final turnos =
@@ -42,8 +44,13 @@ class PlannerService {
       objetivos: objetivos,
     );
     final resultado = engine.generate(context);
-    print("Bloques generados: ${resultado.length}");
-    return engine.generate(context);
-
+    print("Bloques generados: ${resultado.totalBlocks}");
+    return resultado;
+  }
+  List<TimeBlock> getDayPlan(
+    PlannerWeek week,
+    int day,
+  ){
+    return week.blocksForDay(day);
   }
 }

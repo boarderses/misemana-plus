@@ -40,14 +40,18 @@ class _PlannerDebugScreenState
     );
     final analyzer = FreeTimeAnalyzer();
 
-    final days = analyzer.analyze(resultado);
+    final generatedBlocks = resultado.days.values
+    .expand((dayBlocks) => dayBlocks)
+    .toList();
+
+    final days = analyzer.analyze(generatedBlocks);
 
     for (final day in days) {
       print("Día ${day.day}: ${day.minutes} minutos libres",
     );
   }
     setState(() {
-      blocks = resultado;
+      blocks = generatedBlocks;
     });
 
   }
