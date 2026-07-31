@@ -32,6 +32,10 @@ class _SplashScreenState
 
     final usuario =
         await repository.obtenerPrimerUsuario();
+      print("Usuario encontrado al iniciar: $usuario");
+
+      final usuarios = await repository.obtenerUsuarios();
+      print("Usuarios en BD: ${usuarios.length}");
 
     if (!mounted) return;
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/planner/free_time_analyzer.dart';
 import '../../core/planner/services/planner_service.dart';
 import '../../core/planner/time_block.dart';
-import '../../core/planner/time_utils.dart';
+import '../../core/planner/utils/time_utils.dart';
 
 class PlannerDebugScreen extends StatefulWidget {
 

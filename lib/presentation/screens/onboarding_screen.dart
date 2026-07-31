@@ -86,9 +86,19 @@ class _OnboardingScreenState
                   horaDormir: dormirController.text,
                   horaDespertar: despertarController.text,
               );
-              await repository.insertarUsuario(
-                  usuario,
-              );
+              await repository.insertarUsuario(usuario,);
+
+              final id = await repository.insertarUsuario(usuario);
+
+                print("ID insertado: $id");
+
+                final usuarios = await repository.obtenerUsuarios();
+
+                print("Usuarios después de guardar: ${usuarios.length}");
+
+                for (final u in usuarios) {
+                  print("Usuario: ${u.nombre}");
+                }
               if (!mounted) return;
 
               Navigator.pushReplacement(

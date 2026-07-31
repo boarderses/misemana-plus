@@ -11,10 +11,30 @@ class UsuarioRepository {
 
     final Database db =
         await DatabaseHelper.database;
+    
+          await db.delete(
+        'usuarios',
+      );
 
     return await db.insert(
       'usuarios',
       usuario.toMap(),
+    );
+  }
+  Future<int> actualizarUsuario(
+    UsuarioModel usuario,
+  ) async {
+
+    final Database db =
+        await DatabaseHelper.database;
+
+    return await db.update(
+      'usuarios',
+      usuario.toMap(),
+      where: 'id = ?',
+      whereArgs: [
+        usuario.id,
+      ],
     );
   }
 

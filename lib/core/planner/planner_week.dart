@@ -1,6 +1,16 @@
 import 'time_block.dart';
+import 'planner_day.dart';
+
 
 class PlannerWeek {
+
+  String getDayName(
+  int day,
+){
+  return PlannerDay
+      .fromNumber(day)
+      .name;
+}
   final Map<int, List<TimeBlock>> days;
 
   const PlannerWeek({

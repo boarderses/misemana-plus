@@ -1,4 +1,4 @@
-import 'package:misemana_plus/core/planner/time_utils.dart';
+import 'package:misemana_plus/core/planner/utils/time_utils.dart';
 import '../planner_rule.dart';
 import '../time_block.dart';
 import '../planner_context.dart';

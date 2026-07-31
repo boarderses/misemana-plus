@@ -3,7 +3,7 @@ import '../constants/block_types.dart';
 import '../planner_context.dart';
 import '../planner_rule.dart';
 import '../time_block.dart';
-import '../time_utils.dart';
+import '../utils/time_utils.dart';
 
 class SleepRule implements PlannerRule {
 
