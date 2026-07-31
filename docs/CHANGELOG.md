@@ -2,54 +2,165 @@
 
 Todos los cambios importantes del proyecto se documentarán en este archivo.
 
+El formato sigue una evolución por versiones funcionales del proyecto.
+
 ## [0.1.0] - Inicio del proyecto
 
+### Creación inicial
+
 * Creación del proyecto Flutter.
-* Configuración inicial.
-* Diseño de la arquitectura MVVM.
+* Configuración inicial del entorno.
+* Definición de la arquitectura base MVVM.
+* Creación de la estructura inicial del proyecto.
 
-## [0.2.0]
 
-* Implementación de SQLite.
-* Creación de modelos.
-* Repositorios.
-* Gestión de usuarios.
+## [0.2.0] - Persistencia y usuarios
 
-## [0.3.0]
+### Base de datos inicial
 
-* Gestión de semanas.
-* Gestión de turnos.
-* Gestión de objetivos.
+* Implementación de SQLite mediante `sqflite`.
+* Creación del sistema de acceso a datos.
+* Implementación del patrón Repository.
+* Creación del modelo de usuario.
+* Gestión de datos personales:
+  * Nombre.
+  * Hora de dormir.
+  * Hora de despertar.
 
-## [0.4.0]
+## [0.3.0] - Gestión de planificación básica
 
-* Desarrollo del Smart Planner Engine.
-* PlannerContext.
-* PlannerEngine.
-* PlannerService.
-* TimeBlock.
-* TimeUtils.
+### Organización semanal
+
+* Implementación de la entidad Semana.
+* Gestión de turnos laborales.
+* Gestión de objetivos semanales.
+* Creación de repositorios:
+  * UsuarioRepository.
+  * TurnoRepository.
+  * ObjetivoRepository.
+
+* Preparación de la estructura necesaria para la generación automática de semanas.
+
+## [0.4.0] - Smart Planner Engine v1
+
+### Motor inteligente de planificación
+
+Implementación del núcleo de generación automática de semanas.
+
+### Arquitectura del motor
+
+* Creación de:
+  * PlannerContext.
+  * PlannerEngine.
+  * PlannerService.
+  * TimeBlock.
+  * PlannerWeek.
+
+### Sistema basado en reglas
+
+Implementación de las reglas del planificador:
+
 * SleepRule.
 * WorkRule.
 * FreeTimeRule.
+* FoodRule.
 * StudyRule.
 * SportRule.
 * LeisureRule.
 * PersonalTimeRule.
-* FoodRule.
+
+### Sistema de asignación
+
+Implementación de:
+
+* ObjectiveRule.
 * BlockAllocator.
 * TimeWindowAllocator.
 * FreeTimeAnalyzer.
-* ObjectiveRule.
 
-## [0.5.0]
+### Funcionalidades añadidas
 
-* Inicio del desarrollo de la interfaz gráfica del planificador semanal.
+* Generación automática de bloques horarios.
+* Distribución inteligente de objetivos.
+* Gestión de comidas mediante ventanas horarias.
+* Soporte para turnos nocturnos.
+* División automática de jornadas que atraviesan medianoche.
+
+## [0.5.0] - Inicio de Planner UI
+
+### Primera interfaz del planificador
+
+Creación de la primera representación visual de la planificación generada.
+
+Añadido:
+
+* PlannerWeekScreen.
+* Vista semanal mediante pestañas.
+* Navegación por días de la semana.
+* Selección automática del día actual.
+
+### Componentes visuales
+
+Creación de:
+
+* DayColumn.
+* TimeBlockCard.
+* BlockColorHelper.
+* BlockNameHelper.
+* BlockIconHelper.
+
+### Mejoras visuales
+
+* Colores diferenciados por tipo de actividad.
+* Iconos asociados a bloques.
+* Nombres amigables para el usuario.
+* Ordenación cronológica de bloques.
+
+## [0.6.0] - Mejoras de experiencia de usuario
+
+### Resumen diario
+
+Implementación de:
+
+* DaySummaryCard.
+* Contador de bloques diarios.
+* Cálculo de tiempo dedicado a objetivos.
+
+### Información temporal
+
+Añadido:
+
+* Visualización de fecha real del día.
+* Información de semana actual.
+* Actualización manual de planificación.
+
+### Mejoras de navegación
+
+* Integración completa entre generación del planner y vista semanal.
+* Sustitución progresiva de pantallas de depuración.
 
 ## Próximamente
 
-* Vista semanal.
-* Calendario interactivo.
-* Mejora de la interfaz.
-* Personalización de horarios.
+### Planner UI
+
+* Vista tipo timeline diaria.
+* Animaciones entre días.
+* Tema oscuro.
+* Personalización visual.
+* Mejoras de tarjetas de bloques.
+
+### Smart Planner
+
+* Edición manual de actividades.
+* Bloqueo de bloques.
+* Regeneración parcial de semanas.
+* Configuración avanzada de prioridades.
+* Drag & Drop.
+
+### Aplicación
+
+* Estadísticas personales.
 * Notificaciones inteligentes.
+* Exportación a calendario.
+* Sincronización.
+* Recomendaciones inteligentes mediante IA.
