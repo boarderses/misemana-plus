@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:misemana_plus/core/planner/time_block.dart';
 import 'package:misemana_plus/core/planner/utils/day_date_utils.dart';
 
-import 'time_block_card.dart';
+import 'timeline_item.dart';
 import 'day_summary_card.dart';
 
 class DayColumn extends StatelessWidget {
@@ -35,6 +35,11 @@ class DayColumn extends StatelessWidget {
       child: Column(
         crossAxisAlignment:
             CrossAxisAlignment.start,
+            
+      children: [
+      Row(
+      mainAxisAlignment:
+          MainAxisAlignment.spaceBetween,
 
        children: [
           Text(
@@ -43,6 +48,45 @@ class DayColumn extends StatelessWidget {
               fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
+          ),  
+
+            if (DayDateUtils.isToday(dayNumber))
+
+                Container(
+
+                  padding:
+                      const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+
+                  decoration:
+                      BoxDecoration(
+
+                        color:
+                            Colors.black87,
+
+                        borderRadius:
+                            BorderRadius.circular(20),
+                      ),
+
+                  child: const Text(
+                    "HOY",
+                    style:
+                        TextStyle(
+
+                          color:
+                              Colors.white,
+
+                          fontSize:
+                              12,
+
+                          fontWeight:
+                              FontWeight.bold,
+                        ),
+                  ),
+                ),
+            ],
           ),
 
             Text(
@@ -70,7 +114,7 @@ class DayColumn extends StatelessWidget {
               itemCount: sortedBlocks.length,
               itemBuilder: (context,index){
 
-                return TimeBlockCard(
+                return TimelineItem(
                   block: sortedBlocks[index],
                 );
               },

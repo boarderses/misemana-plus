@@ -24,4 +24,14 @@ class DayDateUtils {
 
     return "${date.day}/${date.month}";
   }
+  static bool isToday(int dayNumber) {
+
+    final today =
+        DateTime.now();
+
+    final currentDay =
+        today.weekday;
+
+    return currentDay == dayNumber;
+  }
 }
