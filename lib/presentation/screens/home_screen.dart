@@ -18,10 +18,29 @@ class HomeScreen extends StatelessWidget {
   @override
 Widget build(BuildContext context) {
   return Scaffold(
+  extendBodyBehindAppBar:  true,
     appBar: AppBar(
-      title: const Text("MiSemana+"),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      title: const Text("MiSemana+",
+      style: TextStyle(color: Colors.white)),
     ),
-    body: SingleChildScrollView(
+    body: Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+          Colors.blue.shade900,
+          Colors.blue.shade400,
+        ],
+        ),
+      ), 
+    
+  child: SafeArea(
+
+    child: SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,12 +51,14 @@ Widget build(BuildContext context) {
             style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
 
           const SizedBox(height: 24),
 
           Card(
+            elevation: 4,
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -90,7 +111,7 @@ Widget build(BuildContext context) {
               },
             ),
 
-            DashboardCard(
+          /*  DashboardCard(
               icon: Icons.event_note,
               titulo: "Actividades",
               subtitulo: "Gestiona tus actividades",
@@ -102,8 +123,10 @@ Widget build(BuildContext context) {
               titulo: "Planificación",
               subtitulo: "Generar planificación semanal",
               onTap: () {},
+            ),*/
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
