@@ -139,7 +139,48 @@ Añadido:
 * Integración completa entre generación del planner y vista semanal.
 * Sustitución progresiva de pantallas de depuración.
 
+## [0.7.0] - Gestión e historial de semanas
+
+# Gestión de semanas
+
+* Implementación de SemanaService.
+* Consulta de semanas almacenadas mediante SemanaRepository.
+* Consulta de una semana concreta mediante su identificador.
+* Gestión del número de semana y año.
+* Gestión del tipo de semana:
+  * Semana normal.
+  * Semana de vacaciones.
+
+# Historial de planificaciones
+
+* Creación de PlanningHistoryScreen.
+* Creación de PlanningWeekCard.
+* Visualización de las semanas disponibles.
+* Visualización del año y rango de fechas de cada semana.
+* Identificación visual de la semana actual.
+* Acceso a la planificación de una semana concreta.
+
+# Navegación entre semanas
+
+* Carga de la planificación correspondiente a la semana seleccionada.
+* Corrección de la información temporal mostrada en cada planificación.
+* La semana actual comienza mostrando el día actual.
+* Las semanas anteriores y futuras comienzan mostrando el lunes.
+
+# Mejoras en la interfaz
+
+* Indicador visual de la semana actual.
+* Indicador del tipo de semana.
+* Mejora de la pantalla principal.
+* Acceso al historial de planificaciones desde la aplicación.
+
 ## Próximamente
+
+### Gestión de semanas
+
+* Copiar automáticamente la configuración de una semana anterior.
+* Gestión avanzada de semanas futuras.
+* Mejoras en la gestión de semanas de vacaciones.
 
 ### Planner UI
 

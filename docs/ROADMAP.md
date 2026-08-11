@@ -30,6 +30,21 @@ Evolución prevista del proyecto MiSemana+.
 * [x] Soporte para turnos nocturnos.
 * [x] División automática de jornadas entre días.
 
+## Gestión de semanas
+
+### Completado
+
+* [x] Creación de semanas.
+* [x] Identificación mediante número de semana y año.
+* [x] Gestión de semanas normales.
+* [x] Gestión de semanas de vacaciones.
+* [x] Consulta de semanas almacenadas.
+* [x] Historial de planificaciones.
+* [x] Identificación de la semana actual.
+* [x] Visualización del rango de fechas de cada semana.
+* [x] Acceso a la planificación de una semana concreta.
+* [x] Navegación temporal entre semanas.
+
 # Interfaz gráfica
 
 ## Planner UI v1
@@ -38,6 +53,7 @@ Evolución prevista del proyecto MiSemana+.
 
 * [x] Vista semanal mediante pestañas.
 * [x] Selección automática del día actual.
+* [x] Inicio en lunes para semanas anteriores y futuras.
 * [x] Representación de días mediante columnas.
 * [x] Tarjetas visuales de bloques.
 * [x] Colores según tipo de actividad.
@@ -46,12 +62,15 @@ Evolución prevista del proyecto MiSemana+.
 * [x] Ordenación cronológica de bloques.
 * [x] Resumen diario.
 * [x] Información de fecha y semana actual.
+* [x] Identificación visual del bloque actual.
+* [x] Historial visual de semanas.
+* [x] Indicadores del tipo de semana.
 
 # Próxima versión 1.1 - Mejora de experiencia visual
 
 ## Interfaz
 
-### En desarrollo
+### Pendiente
 
 * [ ] Vista tipo timeline diario.
 * [ ] Animaciones entre días.
@@ -60,6 +79,14 @@ Evolución prevista del proyecto MiSemana+.
 * [ ] Personalización de colores.
 * [ ] Mejoras de accesibilidad.
 * [ ] Ocultar/mostrar bloques de tiempo libre.
+
+## Gestión de semanas
+
+### Pendiente
+
+* [ ] Copiar automáticamente la configuración de una semana anterior.
+* [ ] Mejorar la creación de semanas futuras.
+* [ ] Gestión avanzada de semanas de vacaciones.
 
 # Smart Planner v2
 

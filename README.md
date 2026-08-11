@@ -86,22 +86,23 @@ MiSemana+ sigue una arquitectura basada en MVVM con separación de responsabilid
 Presentation
 │
 ├── Screens
-├── Widgets
+└── Widgets
 │
 Data
 │
 ├── Models
 ├── Repositories
-├── Datasource
+└── Datasource
 │
 Core
 │
-└──  planner/
-
+└── planner/
+    │
     ├── PlannerEngine
     ├── PlannerService
     ├── PlannerContext
     ├── PlannerWeek
+    ├── PlannerDay
     ├── TimeBlock
     │
     ├── Rules
@@ -116,6 +117,9 @@ Core
     ├── Allocators
     │   ├── BlockAllocator
     │   └── TimeWindowAllocator
+    │
+    ├── Services
+    │   └── SemanaService
     │
     └── Utilities
 
@@ -159,6 +163,25 @@ El motor aplica las reglas en el siguiente orden:
 
 Cada regla genera bloques de planificación independientes que posteriormente son mostrados al usuario.
 
+# Historial de planificaciones
+
+MiSemana+ permite consultar las semanas almacenadas en la base de datos mediante una vista de historial.
+
+Cada semana muestra:
+
+* Número de semana.
+* Año.
+* Rango de fechas.
+* Tipo de semana.
+* Indicador de semana actual.
+
+Al seleccionar una semana, se carga su planificación correspondiente.
+
+La aplicación adapta el día inicial de la vista según la semana consultada:
+
+* Semana actual → día actual.
+* Semana anterior o futura → lunes.
+
 # Base de datos
 
 La aplicación utiliza una base de datos local SQLite.
@@ -171,6 +194,13 @@ Principales entidades:
 * Objetivos.
 * Actividades.
 * Planificaciones.
+
+La entidad Semanas permite identificar cada planificación mediante:
+
+* Usuario.
+* Número de semana.
+* Año.
+* Estado o tipo de semana.
 
 La base de datos permite mantener la información del usuario y generar semanas personalizadas.
 
@@ -202,21 +232,36 @@ La base de datos permite mantener la información del usuario y generar semanas 
 
 ✅ Tarjetas visuales de bloques.
 
+✅ Colores e iconos según actividad.
+
+✅ Identificación del bloque actualmente activo.
+
 ✅ Resumen diario de planificación.
+
+✅ Historial de semanas.
+
+✅ Visualización del rango de fechas de cada semana.
+
+✅ Identificación de la semana actual.
 
 # Próximas mejoras
 
 ## Interfaz
 
-* Vista tipo timeline diaria.
 * Mejoras visuales del calendario.
 * Animaciones.
 * Tema oscuro.
 * Personalización de colores.
+* Edición manual de bloques.
 
+## Gestión de semanas
+
+* Copiar automáticamente la configuración de una semana anterior.
+* Mejorar la gestión de semanas futuras.
+* Gestión avanzada de semanas de vacaciones.
+ 
 ## Planificador
 
-* Edición manual de bloques.
 * Bloqueo de actividades.
 * Regeneración parcial.
 * Prioridades configurables.
