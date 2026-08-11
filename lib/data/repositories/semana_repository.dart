@@ -57,4 +57,43 @@ class SemanaRepository {
       resultado.first,
     );
   }
+
+  Future<List<SemanaModel>> obtenerTodas() async {
+
+  final Database db =
+      await DatabaseHelper.database;
+
+  final resultado = await db.query(
+    'semanas',
+    orderBy: 'anio DESC, numeroSemana DESC',
+  );
+
+  return resultado
+
+      .map(
+        (e) => SemanaModel.fromMap(e),
+      )
+      .toList();
+  }
+  Future<SemanaModel?> obtenerSemanaPorId(
+    int id,
+  ) async {
+
+    final Database db =
+        await DatabaseHelper.database;
+
+    final resultado = await db.query(
+      'semanas',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (resultado.isEmpty) {
+      return null;
+    }
+
+    return SemanaModel.fromMap(
+      resultado.first,
+    );
+  }
 }

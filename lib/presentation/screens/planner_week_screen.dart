@@ -6,10 +6,14 @@ import 'package:misemana_plus/presentation/widgets/planner/day_column.dart';
 import '../../core/planner/utils/date_utils.dart';
 import '../../core/planner/utils/week_utils.dart';
 import '../../../core/planner/planner_day.dart';
+import '../../../core/planner/services/semana_service.dart';
+import '../../../data/models/semana_model.dart';
+
 
 class PlannerWeekScreen extends StatefulWidget {
 
   final int semanaId;
+
   const PlannerWeekScreen({
     super.key,
     required this.semanaId,
@@ -18,170 +22,355 @@ class PlannerWeekScreen extends StatefulWidget {
   @override
   State<PlannerWeekScreen> createState() =>
       _PlannerWeekScreenState();
-
 }
+
+
 class _PlannerWeekScreenState
     extends State<PlannerWeekScreen>
-    with SingleTickerProviderStateMixin  {
+    with SingleTickerProviderStateMixin {
 
   final PlannerService plannerService =
       PlannerService();
 
+  final SemanaService semanaService =
+      SemanaService();
+
+  late Future<SemanaModel?> futureSemana;
   late Future<PlannerWeek> futureWeek;
-  late TabController tabController;
+
+  TabController? tabController;
 
   int initialDay = 0;
 
   final days = PlannerDay.days;
+
 
   @override
   void initState() {
 
     super.initState();
 
-    final today = PlannerDateUtils.getCurrentDay();
+    futureSemana =
+        semanaService.obtenerSemanaPorId(
+      widget.semanaId,
+    );
 
-    initialDay = today - 1;
+    cargarSemana();
 
-    tabController = TabController(
+    prepararTabController();
+  }
+
+
+  void cargarSemana() {
+
+    futureWeek =
+        plannerService.generate(
+      widget.semanaId,
+    );
+  }
+
+
+  Future<void> prepararTabController() async {
+
+    final semana =
+        await futureSemana;
+
+    if (!mounted) {
+      return;
+    }
+
+    if (semana == null) {
+
+      initialDay = 0;
+
+    } else {
+
+      final now =
+          DateTime.now();
+
+      final currentWeek =
+          WeekUtils.getWeekNumber(now);
+
+      final isCurrentWeek =
+          semana.numeroSemana ==
+              currentWeek &&
+          semana.anio ==
+              now.year;
+
+      if (isCurrentWeek) {
+
+        final today =
+            PlannerDateUtils.getCurrentDay();
+
+        initialDay =
+            today - 1;
+
+      } else {
+
+        initialDay = 0;
+
+      }
+    }
+
+    tabController =
+        TabController(
       length: days.length,
       initialIndex: initialDay,
       vsync: this,
     );
-    cargarSemana();
-  }
-   void cargarSemana(){
 
-    futureWeek =
-        plannerService.generate(
-          widget.semanaId,
-        );
+    setState(() {});
   }
+
 
   @override
   void dispose() {
 
-    tabController.dispose();
+    tabController?.dispose();
 
     super.dispose();
   }
 
-    @override
+
+  @override
   Widget build(BuildContext context) {
 
     return Scaffold(
 
       appBar: AppBar(
+
         title: Column(
+
           crossAxisAlignment:
-          CrossAxisAlignment.start,
+              CrossAxisAlignment.start,
 
-        children: const [
+          children: const [
 
-          Text(
-            "MiSemana+",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            Text(
+              "MiSemana+",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight:
+                    FontWeight.bold,
+              ),
             ),
-          ),
 
-          Text(
-            "Mi planificación semanal",
-            style: TextStyle(
-              fontSize: 13,
+            Text(
+              "Mi planificación semanal",
+              style: TextStyle(
+                fontSize: 13,
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
 
         actions: [
 
           IconButton(
+
             icon: const Icon(
               Icons.refresh,
             ),
 
-            onPressed: (){
+            onPressed: () {
+
               setState(() {
                 cargarSemana();
               });
+
             },
           ),
         ],
-        bottom: TabBar(
 
-          controller: tabController,
-          isScrollable: true,
-          tabs: days.map(
-            (day) => Tab(
-              text: day.name.substring(0,3),
-            ),
-          ).toList(),
-        ),
+        bottom:
+
+            tabController == null
+
+                ? null
+
+                : TabBar(
+
+                    controller:
+                        tabController,
+
+                    isScrollable:
+                        true,
+
+                    tabs:
+                        days.map(
+
+                      (day) => Tab(
+
+                        text:
+                            day.name
+                                .substring(0, 3),
+
+                      ),
+
+                    ).toList(),
+                  ),
       ),
 
-      body: Column (children: [
-      Container(
-        padding:
-            const EdgeInsets.all(12),
-        alignment:
-            Alignment.centerLeft,
 
-        child: Text(
-          WeekUtils.getCurrentWeekText(),
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight:
-                FontWeight.bold,
+      body: Column(
+
+        children: [
+
+          FutureBuilder<SemanaModel?>(
+
+            future: futureSemana,
+
+            builder:
+                (context, snapshot) {
+
+              if (snapshot.connectionState ==
+                  ConnectionState.waiting) {
+
+                return const Padding(
+
+                  padding:
+                      EdgeInsets.all(12),
+
+                  child:
+                      LinearProgressIndicator(),
+                );
+              }
+
+
+              final semana =
+                  snapshot.data;
+
+
+              if (semana == null) {
+
+                return const Padding(
+
+                  padding:
+                      EdgeInsets.all(12),
+
+                  child: Text(
+                    "Semana no encontrada",
+                  ),
+                );
+              }
+
+
+              final start =
+                  WeekUtils
+                      .getStartOfWeekNumber(
+                semana.numeroSemana,
+                semana.anio,
+              );
+
+
+              final end =
+                  WeekUtils
+                      .getEndOfWeekNumber(
+                semana.numeroSemana,
+                semana.anio,
+              );
+
+
+              return Container(
+
+                padding:
+                    const EdgeInsets.all(12),
+
+                alignment:
+                    Alignment.centerLeft,
+
+                child: Text(
+
+                  "Semana "
+                  "${semana.numeroSemana}\n"
+                  "Del "
+                  "${WeekUtils.formatDate(start)}"
+                  " - "
+                  "${WeekUtils.formatDate(end)}",
+
+                  style:
+                      const TextStyle(
+
+                    fontSize: 16,
+
+                    fontWeight:
+                        FontWeight.bold,
+                  ),
+                ),
+              );
+            },
           ),
-        ),
-      ),
 
-      Expanded(
 
-      child: FutureBuilder<PlannerWeek>(
+          Expanded(
 
-        future: futureWeek,
-        builder: (context,snapshot){
+            child:
+                FutureBuilder<PlannerWeek>(
 
-          if(snapshot.connectionState ==
-              ConnectionState.waiting){
+              future: futureWeek,
 
-            return const Center(
-              child:
-                  CircularProgressIndicator(),
-            );
-          }
-          if(!snapshot.hasData){
+              builder:
+                  (context, snapshot) {
 
-            return const Center(
+                if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
 
-              child: Text(
-                "No hay planificación disponible",
-              ),
-            );
-          }
+                  return const Center(
 
-          final week =
-              snapshot.data!;
+                    child:
+                        CircularProgressIndicator(),
+                  );
+                }
 
-          return TabBarView(
 
-            controller: tabController,
-            children: List.generate(
-              days.length,
+                if (!snapshot.hasData) {
 
-              (index){
+                  return const Center(
 
-                return DayColumn(
-                  dayName:
-                      days[index].name,
-                  dayNumber:
-                      days[index].number,
-                  blocks:
-                      week.blocksForDay(
-                        days[index].number,
+                    child: Text(
+                      "No hay planificación disponible",
+                    ),
+                  );
+                }
+
+
+                if (tabController == null) {
+
+                  return const Center(
+
+                    child:
+                        CircularProgressIndicator(),
+                  );
+                }
+
+
+                final week =
+                    snapshot.data!;
+
+
+                return TabBarView(
+
+                  controller:
+                      tabController,
+
+                  children:
+                      List.generate(
+
+                    days.length,
+
+                    (index) {
+
+                      return DayColumn(
+
+                        dayName:
+                            days[index].name,
+
+                        dayNumber:
+                            days[index].number,
+
+                        blocks:
+                            week.blocksForDay(
+                          days[index].number,
                         ),
                       );
                     },

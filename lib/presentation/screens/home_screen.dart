@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:misemana_plus/presentation/widgets/dashboard_card.dart';
 import 'objetivos_screen.dart';
 import 'weekly_plan_screen.dart';
+import 'planning_history_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final String nombre;
@@ -106,6 +107,21 @@ Widget build(BuildContext context) {
                   context,
                   MaterialPageRoute(
                     builder: (_) => const ObjetivosScreen(),
+                  ),
+                );
+              },
+            ),
+
+          DashboardCard(
+              icon: Icons.calendar_today,
+              titulo: "Mis planificaciones",
+              subtitulo: "Consulta semanas anteriores",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        const PlanningHistoryScreen(),
                   ),
                 );
               },
