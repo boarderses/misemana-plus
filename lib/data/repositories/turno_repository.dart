@@ -56,15 +56,37 @@ class TurnoRepository {
         .map((e) => TurnoModel.fromMap(e))
         .toList();
   }
+
   Future<void> eliminarTurno(int id) async {
 
     final Database db =
         await DatabaseHelper.database;
 
-        await db.delete(
-          'turnos',
+    await db.delete(
+      'turnos',
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  Future<void> copiarTurnosSemana(
+    int semanaOrigenId,
+    int semanaDestinoId,
+  ) async {
+
+    final turnos =
+        await obtenerTurnosSemana(semanaOrigenId);
+
+    for (final turno in turnos) {
+
+      final nuevoTurno = TurnoModel(
+        semanaId: semanaDestinoId,
+        dia: turno.dia,
+        horaInicio: turno.horaInicio,
+        horaFin: turno.horaFin,
+      );
+
+      await insertarTurno(nuevoTurno);
+    }
   }
 }

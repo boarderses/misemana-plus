@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../data/models/semana_model.dart';
 import '../../data/repositories/semana_repository.dart';
 import 'work_schedule_screen.dart';
+import '../../core/planner/services/semana_service.dart';
+import '../../core/planner/utils/week_utils.dart';
 
 class PrepararSemanaScreen extends StatefulWidget {
   const PrepararSemanaScreen({super.key});
@@ -23,6 +25,9 @@ class _PrepararSemanaScreenState
   final SemanaRepository repository =
     SemanaRepository();
 
+  final SemanaService semanaService =
+    SemanaService();
+
   bool copiarSemanaAnterior = false;
   bool vacaciones = false;
 
@@ -30,8 +35,14 @@ class _PrepararSemanaScreenState
   void initState() {
     super.initState();
 
-    numeroSemanaController.text = "31";
-    anioController.text = "2026";
+    final siguiente =
+        WeekUtils.getNextWeek();
+
+    numeroSemanaController.text =
+        siguiente['semana'].toString();
+
+    anioController.text =
+        siguiente['anio'].toString();
   }
 
   @override
@@ -111,10 +122,10 @@ class _PrepararSemanaScreenState
                       int.parse(anioController.text),
                   estado:
                       vacaciones ? "Vacaciones" : "Normal",
-               );
+                );
 
                 final semanaExistente =
-                  await repository.obtenerSemana(
+                    await repository.obtenerSemana(
                   semana.usuarioId,
                   semana.numeroSemana,
                   semana.anio,
@@ -123,10 +134,41 @@ class _PrepararSemanaScreenState
                 int semanaId;
 
                 if (semanaExistente != null) {
+
                   semanaId = semanaExistente.id!;
+
                 } else {
+
                   semanaId =
-                  await repository.insertarSemana(semana);
+                      await repository.insertarSemana(semana);
+                }
+
+                if (copiarSemanaAnterior) {
+
+                  final semanaCreada =
+                      await semanaService.obtenerSemanaPorId(
+                    semanaId,
+                  );
+
+                  if (semanaCreada != null) {
+
+                    final copiada =
+                        await semanaService.copiarSemanaAnterior(
+                      semanaCreada,
+                    );
+
+                    if (!copiada && mounted) {
+
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            "No se encontró una semana anterior para copiar",
+                          ),
+                        ),
+                      );
+                    }
+                  }
                 }
 
                 if (!mounted) return;

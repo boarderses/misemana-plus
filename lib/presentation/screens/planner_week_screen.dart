@@ -37,6 +37,7 @@ class _PlannerWeekScreenState
 
   late Future<SemanaModel?> futureSemana;
   late Future<PlannerWeek> futureWeek;
+  SemanaModel? semanaSeleccionada;
 
   TabController? tabController;
 
@@ -78,6 +79,8 @@ class _PlannerWeekScreenState
     if (!mounted) {
       return;
     }
+
+    semanaSeleccionada = semana;
 
     if (semana == null) {
 
@@ -127,7 +130,6 @@ class _PlannerWeekScreenState
   void dispose() {
 
     tabController?.dispose();
-
     super.dispose();
   }
 
@@ -167,21 +169,28 @@ class _PlannerWeekScreenState
         actions: [
 
           IconButton(
-
-            icon: const Icon(
-              Icons.refresh,
-            ),
-
+            icon: const Icon(Icons.home),
+            tooltip: "Inicio",
             onPressed: () {
+              Navigator.popUntil(
+                context,
+                (route) => route.isFirst,
+              );
+            },
+          ),
 
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: "Actualizar planificación",
+            onPressed: () {
               setState(() {
                 cargarSemana();
               });
-
             },
           ),
         ],
 
+      
         bottom:
 
             tabController == null
@@ -237,9 +246,7 @@ class _PlannerWeekScreenState
               }
 
 
-              final semana =
-                  snapshot.data;
-
+              final semana = snapshot.data;
 
               if (semana == null) {
 
@@ -334,7 +341,8 @@ class _PlannerWeekScreenState
                 }
 
 
-                if (tabController == null) {
+                if (tabController == null||
+                    semanaSeleccionada == null) {
 
                   return const Center(
 
@@ -367,6 +375,9 @@ class _PlannerWeekScreenState
 
                         dayNumber:
                             days[index].number,
+
+                        weekNumber: semanaSeleccionada!.numeroSemana,
+                          year: semanaSeleccionada!.anio,
 
                         blocks:
                             week.blocksForDay(

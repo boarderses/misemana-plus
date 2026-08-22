@@ -45,4 +45,21 @@ class ObjetivoRepository {
         whereArgs: [semanaId],
        );
     }
-}
+    Future<void> copiarObjetivosSemana(
+      int semanaOrigenId,
+      int semanaDestinoId,
+      ) async {
+        final objetivos =
+            await obtenerObjetivosSemana(semanaOrigenId);
+
+        for (final objetivo in objetivos) {
+          final nuevoObjetivo = ObjetivoModel(
+            semanaId: semanaDestinoId,
+            tipo: objetivo.tipo,
+            cantidad: objetivo.cantidad,
+          );
+
+          await insertarObjetivo(nuevoObjetivo);
+        }
+      }
+    }

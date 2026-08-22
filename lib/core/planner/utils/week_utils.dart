@@ -44,34 +44,48 @@ class WeekUtils {
     return "$day/$month";
   }
 
-
-  /// Obtiene el número ISO de semana.
   static int getWeekNumber(
     DateTime date,
   ) {
 
+    final startOfWeek =
+        getStartOfWeek(date);
+
     final thursday =
-        date.add(
-          Duration(
-            days: 4 - date.weekday,
-          ),
-        );
+        startOfWeek.add(
+      const Duration(days: 3),
+    );
 
-    final firstThursday =
-        DateTime(
-          thursday.year,
-          1,
-          4,
-        );
+    final isoYear =
+        thursday.year;
 
-    final difference =
-        thursday.difference(
-          firstThursday,
-        ).inDays;
+    final firstMonday =
+        getStartOfWeek(
+      DateTime(
+        isoYear,
+        1,
+        4,
+      ),
+    );
 
-    return 1 + (difference / 7).floor();
+    return
+        ((startOfWeek.difference(firstMonday).inDays) ~/ 7) + 1;
   }
+/// Devuelve el número y año de la siguiente semana ISO.
+static Map<String, int> getNextWeek() {
 
+  final now = DateTime.now();
+
+  final nextWeekDate =
+      getStartOfWeek(now).add(
+    const Duration(days: 7),
+  );
+
+  return {
+    'semana': getWeekNumber(nextWeekDate),
+    'anio': nextWeekDate.year,
+  };
+}
 
   /// Devuelve el texto de la semana actual.
   static String getCurrentWeekText() {

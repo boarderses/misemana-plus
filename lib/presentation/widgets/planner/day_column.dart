@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:misemana_plus/core/planner/time_block.dart';
 import 'package:misemana_plus/core/planner/utils/day_date_utils.dart';
+import 'package:misemana_plus/core/planner/utils/week_utils.dart';
 
 import 'timeline_item.dart';
 import 'day_summary_card.dart';
@@ -9,14 +10,26 @@ class DayColumn extends StatelessWidget {
 
   final String dayName;
   final int dayNumber;
+  final int weekNumber;
+  final int year;
   final List<TimeBlock> blocks;
 
   const DayColumn({
     super.key,
     required this.dayName,
     required this.dayNumber,
+    required this.weekNumber,
+    required this.year,
     required this.blocks,
   });
+
+  bool _isToday(DateTime date) {
+  final now = DateTime.now();
+
+  return date.year == now.year &&
+      date.month == now.month &&
+      date.day == now.day;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +38,15 @@ class DayColumn extends StatelessWidget {
       ..sort(
         (a, b) => a.start.compareTo(b.start),
       );
-    final date = DayDateUtils.getDateForDay(
-      dayNumber,
-      );
+    final date =
+        WeekUtils.getStartOfWeekNumber(
+      weekNumber,
+      year,
+    ).add(
+      Duration(
+        days: dayNumber - 1,
+      ),
+    );
 
     return Padding(
 
@@ -50,7 +69,7 @@ class DayColumn extends StatelessWidget {
             ),
           ),  
 
-            if (DayDateUtils.isToday(dayNumber))
+            if (_isToday(date))
 
                 Container(
 
